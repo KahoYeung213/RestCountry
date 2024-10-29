@@ -7,18 +7,23 @@ import Navbar from './components/Navbar';
 //import pages
 import Home from './pages/Home';
 import SingleCountry from './pages/SingleCountry';
+import Regions from './pages/Regions';
 const App = () => {
-    return(
-        <Container>
+    return (
+
         <Router>
-            <Navbar/>
+            <Navbar />
+            <Container>
                 <Routes>
-                    <Route path='/' element={<Home/>}/>
-                    <Route path='/country/:name' element={<SingleCountry/>}/>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/regions' element={<Regions />} />
+
+                    <Route path='/country/:name' element={<SingleCountry />} />
 
                 </Routes>
+            </Container>
         </Router>
-        </Container>
+
     )
 };
 

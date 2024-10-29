@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import CountryCard from '../components/Countrycard';
  
  

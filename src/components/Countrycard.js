@@ -5,7 +5,7 @@ const CountryCard = (props) => {
     const {name, flag, region} = props;
    
     return (
-        <Card className='my-2'>
+        <Card className='my-3 p-2'>
             <Card.Img className='h-100 w-100' src={flag} variant='top'/>
             <Card.Body>
                 <Card.Title>
