@@ -10,20 +10,19 @@ const SingleCountry = () => {
     const { name } = useParams();
     const [country, setCountry] = useState(null);
     const [food, setFood] = useState(null);
-
-    // Fetch country data
+// Countries
     useEffect(() => {
         axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
             .then(res => {
                 console.log(res.data);
-                setCountry(res.data[0]); // Set country data
+                setCountry(res.data[0]); 
             })
             .catch(err => {
                 console.error(err);
             });
     }, [name]);
-
-    // Fetch food data when country is set and has a demonym
+    // FOOD API
+    // food data by the countries demonym
     useEffect(() => {
         if (country && country.demonyms?.eng?.f) {
             const demonym = country.demonyms.eng.f;
@@ -67,7 +66,7 @@ const SingleCountry = () => {
                 </Col>
 
 
-
+                    {/* Map API */}
                 <Col>
                     <MapContainer style={{ height: "400px", width: "100%" }} center={[country.latlng[0], country.latlng[1]]} zoom={4} scrollWheelZoom={false}>    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />    <Marker position={[country.latlng[0], country.latlng[1]]}>        <Popup>            A pretty CSS3 popup. <br /> Easily customizable.        </Popup>    </Marker></MapContainer>
                 </Col>
