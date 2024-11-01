@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Row, Col, Image, Container } from 'react-bootstrap';
 
 
@@ -10,12 +10,13 @@ const SingleCountry = () => {
     const { name } = useParams();
     const [country, setCountry] = useState(null);
     const [food, setFood] = useState(null);
-// Countries
+    // Countries
+
     useEffect(() => {
         axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
             .then(res => {
                 console.log(res.data);
-                setCountry(res.data[0]); 
+                setCountry(res.data[0]);
             })
             .catch(err => {
                 console.error(err);
@@ -23,6 +24,7 @@ const SingleCountry = () => {
     }, [name]);
     // FOOD API
     // food data by the countries demonym
+
     useEffect(() => {
         if (country && country.demonyms?.eng?.f) {
             const demonym = country.demonyms.eng.f;
@@ -42,42 +44,49 @@ const SingleCountry = () => {
     }
 
     return (
-        <Container className="">
-            <Row>
-                <Col>  <img src={country.flags.png} alt={`${country.name.common}'s flag`} />
+        <>
+            <Container fluid className="px-5 py-3 bg-info-subtle">
+                <Row>
+                    <Col>  <img src={country.flags.png} alt={`${country.name.common}'s flag`} />
 
-                    <h1>{country.name.common}</h1>
-                    <h2>Official name: {country.name.official}</h2>
-                    <p>Region: {country.region}</p>
-                    {
-                        country.subregion && <p>Subregion: {country.subregion}</p>
-                    }
+                        <h1>{country.name.common}</h1>
+                        <p>Official name: {country.name.official}</p>
+                        <h3>Region: <Link to={`/region/${country.region}`}>{country.region}</Link></h3>
 
-                    <h3>Languages:</h3>
-                    <ul>
-                        {Object.values(country.languages).map((language, index) => {
-                            return <li key={index}>{language}</li>;
-                        })}
-                    </ul>
+                        <h3>Languages:</h3>
+                        <ul>
+                            {Object.values(country.languages).map((language, index) => {
+                                return <li key={index}>{language}</li>;
+                            })}
+                        </ul>
+                        <h4>Population: {country.population}</h4>
+                        {
+                            country.subregion && <p>Subregion: {country.subregion}</p>
+                        }
 
-                    <h4>Currency: {Object.values(country.currencies)[0].name} ({Object.values(country.currencies)[0].symbol})</h4>
 
 
-                </Col>
+                        <h4>Currency: {Object.values(country.currencies)[0].name} ({Object.values(country.currencies)[0].symbol})</h4>
+
+
+                    </Col>
 
 
                     {/* Map API */}
+                    <Col>
+                        <MapContainer style={{ height: "400px", width: "100%" }} center={[country.latlng[0], country.latlng[1]]} zoom={4} scrollWheelZoom={false}>    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />    <Marker position={[country.latlng[0], country.latlng[1]]}>        <Popup>            A pretty CSS3 popup. <br /> Easily customizable.        </Popup>    </Marker></MapContainer>
+                    </Col>
+
+                </Row>
+            </Container>
+
+
+
+            <Container fluid className="px-5 py-3 bg-warning-subtle">
+
                 <Col>
-                    <MapContainer style={{ height: "400px", width: "100%" }} center={[country.latlng[0], country.latlng[1]]} zoom={4} scrollWheelZoom={false}>    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />    <Marker position={[country.latlng[0], country.latlng[1]]}>        <Popup>            A pretty CSS3 popup. <br /> Easily customizable.        </Popup>    </Marker></MapContainer>
-                </Col>
-
-            </Row>
-
-
-            <Col>
-                <Container>
                     {country ? (
-                        <h1>{country.name.common}</h1>
+                        <h1>Food from {country.name.common}</h1>
                     ) : (
                         <p>Loading country...</p>
                     )}
@@ -104,10 +113,11 @@ const SingleCountry = () => {
                     ) : (
                         <p>No meals found for this country.</p>
                     )}
-                </Container>
-            </Col>
+                </Col>
+            </Container>
 
-        </Container>
+        </>
+
     )
 }
 

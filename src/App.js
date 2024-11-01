@@ -13,14 +13,14 @@ const App = () => {
     return (
         <Router>
             <Navbar />
-            <Container>
+            {/* <Container> */}
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/regions' element={<Regions />} />
                     <Route path='/region/:region' element={<RegionDetails />} />
                     <Route path='/country/:name' element={<SingleCountry />} />
                 </Routes>
-            </Container>
+            {/* </Container> */}
         </Router>
     );
 };

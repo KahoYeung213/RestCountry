@@ -3,7 +3,7 @@ import { Container, Button } from 'react-bootstrap';
 
 const Navbar = () => {
     return (
-        <Container fluid className='py-1 mb-3 bg-danger'>
+        <Container fluid className='py-1 mb-0 bg-info'>
             <Container className='p-0'>
                 <div className='mb-2'>
                     <Button href="/" className="me-2">Home</Button>     

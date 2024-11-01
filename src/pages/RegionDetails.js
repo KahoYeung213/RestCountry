@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Container } from 'react-bootstrap';
 import CountryCard from '../components/Countrycard';
 
 const RegionDetails = () => {
     const { region } = useParams();
     const [countries, setCountries] = useState([]);
     const [error, setError] = useState(null);
+
+    
 
     useEffect(() => {
         axios.get(`https://restcountries.com/v3.1/region/${region}`)
@@ -22,28 +24,30 @@ const RegionDetails = () => {
             });
     }, [region]);
 
+
+    //Maps the countries and makes them return flag,name,region,pop
+    let countryCards = countries.map((country, index) => {
+        return (
+            <>
+                <CountryCard
+                    key={country.ccn3}
+                    flag={country.flags.png}
+                    name={country.name.common}
+                    region={country.region}
+                    population={country.population}
+                />
+            </>)
+    });
+
+
     return (
         <div>
-            <h1>Countries in {region}</h1>
-            {error ? (
-                <p>{error}</p>
-            ) : (
-                <Row>
-                    {countries.map((country) => (
-                        <Col key={country.cca3} md={3}>
-                            <Card className='my-3 p-2'>
-                                <Card.Body>
-                                    <CountryCard
-                                        key={country.ccn3}
-                                        flag={country.flags.png}
-                                        name={country.name.common}
-                                    />
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
+            <Container className='mt-3'>
+                <h1>Countries in {region}</h1>
+                <Row md={3} xs={1}>
+                    {countryCards}
                 </Row>
-            )}
+            </Container>
         </div>
     );
 };

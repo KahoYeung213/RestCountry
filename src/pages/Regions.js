@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RegionCard from '../components/RegionCard';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 
 const Regions = () => {
     const [regions, setRegions] = useState([]);
 
+    //maps the country array to get regions
+    //set to remove duplicate regions
     useEffect(() => {
         axios.get(`https://restcountries.com/v3.1/all`)
             .then(res => {
@@ -18,8 +20,11 @@ const Regions = () => {
             });
     }, []);
 
+
+    
     return (
         <div>
+            <Container className='mt-3'>
             <h1>Regions</h1>
             <Row>
                 {regions.map((region, index) => (
@@ -28,6 +33,7 @@ const Regions = () => {
                     </Col>
                 ))}
             </Row>
+            </Container>
         </div>
     );
 }

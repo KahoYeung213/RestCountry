@@ -57,21 +57,24 @@ const Home = ({ countries }) => {
     });
 
     return (
-        <> 
-        <div>
+        <>
+        <Container>
+            <div>
                 <form onSubmit={handleSubmit}>
                     <input
+                        className='mt-3'
                         type="text"
                         placeholder="Search for a country..."
                         value={searchTerm}
                         onChange={handleChange}
                     />
-                    <button type="submit">Search</button>
+                    <button key={5} type="submit">Search</button>
                 </form>
                 <Row md={3} xs={1}>
                     {countryCards}
                 </Row>
-        </div>
+            </div>
+            </Container>
         </>
     );
 }
